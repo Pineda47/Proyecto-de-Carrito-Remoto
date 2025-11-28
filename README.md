@@ -34,17 +34,17 @@ Como se menciona en el desarrollo previo se segira el mismo esquema
 ### Nodo de ultra_sonido
 El nodo tiene como nombre"ultra_sonido" y se creo dentro de un un subscritor que recibe la unformacion por via USB las distancias que brinda el ultrasonido para que lego las muestre :
 
+```python
 import rclpy
 from std_msgs.msg import Float32
 from rclpy.node import Node
 import serial
 import time
+
 # variable global
 global ardu
 
-# funcion que conecta el puerto usb con la misma frecuencia que el ardiono trabaja para recibir informacion
-
-
+# función que conecta el puerto USB con la misma frecuencia que el Arduino trabaja para recibir información
 def create_arduino_connection(node: Node):
     port = node.get_parameter("port").value
     baudRate = node.get_parameter("baudRate").value
@@ -98,8 +98,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
 
 
