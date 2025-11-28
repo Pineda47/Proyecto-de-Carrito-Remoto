@@ -14,8 +14,7 @@ En esta etapa se identifican y se caracterizan las ubicaciones de cada pin:
 Además, en esta parte se realiza el cálculo para determinar la distancia que será recibida por el nodo 1, correspondiente al procesamiento del sensor ultrasónico.
 
 
-
-
+´´´python
 #include <Arduino.h>
 
 // pines para el motor 1 que son los mismo que estan en fisico
@@ -151,6 +150,18 @@ void loop()
 
   delay(100);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
