@@ -98,8 +98,35 @@ def main():
 
 if __name__ == "__main__":
     main()
+-----------------------------------
+```python
 
+En el el setup.py del nodo se debe escriber el nombre de efecucion que seria de la siguente manera:
+from setuptools import find_packages, setup
 
+package_name = 'ultra_sonido'
 
-## Additional comments
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='juan-camilo-pineda',
+    maintainer_email='juan.piendah@javeriana.edu.co',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'subscritor_ultra_sonido = ultra_sonido.subscritor_ultra_sonido:main',
+        ],
+    },
+)
+
 
