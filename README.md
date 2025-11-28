@@ -32,7 +32,7 @@ Se enfocó en identificar las tareas y objetivos principales del proyecto:
 A continuación, se presentarán los nodos con sus respectivos nombres, el nombre utilizado para ejecutarlos y los valores que deben mostrarse en la terminal.
 Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
 - [Nodo de ultra_sonido]()
-- [Nodo de control_velocidad]()
+- [Nodo de control_velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Control-de-velocidades)
 - [Nodo de contorl_movimento]()
 - [Nodo de controlador]()
 - [Arduino]()
