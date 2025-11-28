@@ -1,38 +1,39 @@
 # Pruebas de Funcionamiento del Proyecto
+El proyecto se validó mediante tres etapas principales, asegurando la correcta comunicación entre nodos, la correspondencia física de los pines y el funcionamiento final del sistema antes de su integración completa.
 
-En esta sección se presentan las pruebas realizadas para validar el funcionamiento del proyecto. Se recomienda seguir ambas etapas si se desea replicar el proyecto, utilizando los códigos de prueba incluidos.
+## Etapa 1: Verificación de Conexiones en Serie entre Nodos
 
-Etapa 1: Verificación de Conexiones en Serie entre Nodos
+ - Se evaluó la transmisión de datos entre nodos consecutivos, verificando que los valores fueran lógicos y coherentes.
 
-En esta etapa se enfocó en verificar las conexiones en serie entre los nodos, evaluando de manera secuencial que los valores transmitidos sean lógicos y coherentes entre cada par de nodos.
+ - Se utilizó un nodo generador de valores de distancia aleatorios y un nodo receptor que determinaba la acción del vehículo:
 
-El procedimiento se realizó de la siguiente manera:
+ - -1: Retroceder
 
-Prueba de comunicación entre nodos consecutivos:
-Se aplicó la verificación de dos en dos nodos para asegurar que los datos transmitidos fueran consistentes y correctos.
+ - 1: Avanzar
 
-Caso específico – Nodo generador de distancias y nodo receptor:
+- 0: Detenerse
 
-El primer nodo genera valores de distancia aleatorios para simular la lectura de un sensor ultrasónico.
+- La prueba se realizó ejecutando ambos programas en terminales separadas, validando la correcta transmisión de datos por USB antes de migrar a Wi-Fi.
 
-En el setup se definió el nombre del publicador al que debe conectarse el siguiente nodo.
+## Etapa 2: Análisis de Conexiones Físicas
 
-Para fines de análisis, los valores recibidos se muestran en la terminal mediante println(valor de la distancia), permitiendo verificar que la conexión USB funciona de manera óptima antes de implementar la comunicación Wi-Fi.
+- Se verificó la correspondencia entre los pines físicos del Arduino y los definidos en el código de PlatformIO.
 
-Integración con el nodo de control de velocidad:
+ - Se ejecutaron programas de prueba para identificar los pines activos y se realizaron alteraciones controladas de un solo pin para observar comportamientos inesperados.
 
-Una vez confirmada la comunicación entre el nodo generador de distancias y el nodo receptor, se conecta el suscriptor de control de velocidad.
+### Objetivo:
 
-Este nodo recibe los valores de distancia y determina la acción del vehículo según la siguiente regla:
+- Asegurar que los pines del código correspondan a los pines físicos.
 
--1: Retroceder
+- Garantizar coherencia entre la lógica de programación y las conexiones físicas.
 
-1: Avanzar
+- Minimizar errores al integrar sensores y actuadores.
 
-0: Detenerse
+## Etapa 3: Pruebas Finales
 
-Ejecución de la prueba:
+- Antes de construir el vehículo completo, se verificó que todas las conexiones, desde el sensor ultrasónico hasta los motores, funcionaran correctamente al ejecutar los cuatro nodos del sistema.
 
-Para realizar la evaluación correctamente, es necesario ejecutar ambos programas en dos terminales diferentes: uno para el nodo que genera los valores de distancia y otro para el nodo de control de velocidad.
+- Se utilizó un objeto y una regla en el piso para simular distancias reales.
 
-Se espera que la terminal del suscriptor muestre las acciones correspondientes a los valores recibidos, verificando así la correcta transmisión de datos.
+-Con las condiciones de distancia definidas en el código, se comprobó que los motores giraran o se detuvieran según la posición del objeto, validando el funcionamiento integral del sistema.
+
