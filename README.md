@@ -1,4 +1,4 @@
-# arduino 
+# Arduino 
 Para el desarrollo y la planificación del sistema, es necesario cargar mediante USB el código base de Arduino. Este código debe tener la capacidad de recibir los valores enviados por el nodo final y procesarlos correctamente.
 
 En este caso, los motores deben girar en direcciones opuestas cuando se ordena un giro, es decir, cada motor debe activar sus pines de dirección en sentido contrario para generar el efecto de rotación. Por el contrario, cuando el vehículo avanza o retrocede, ambos motores deben mantener la misma configuración de sentido.
