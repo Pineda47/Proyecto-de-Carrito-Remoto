@@ -15,7 +15,7 @@ Las pruebas se realizaron en dos etapas:
 
 1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
 2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](URL_de_la_rama).
+- Esta fase está documentada en la rama de experimentación. [Click aquí](Desarrollo-previo).
 
 ## Related tickets
 
