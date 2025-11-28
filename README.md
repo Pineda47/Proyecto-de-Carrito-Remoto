@@ -1,40 +1,40 @@
-# Proyecto-de-Carrito-Remoto
-Desarrollo de un carrito a control remoto con capacidad de frenar automáticamente al detectar un obstáculo, mediante la integración entre Arduino y Python utilizando comunicación serial en un esquema de publicadores y suscriptores.
 
-## Changes included
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes: [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Desarrollo-previo).  
-Asimismo, se desarrolló un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings). Esto facilita la comprensión de la comunicación entre nodos y Arduino en el sistema.
-
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
-
-## Testing implemented
-
-Las pruebas se realizaron en dos etapas:  
-
-1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
-2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Pruebas).
-
-## Related tickets
-
-Se enfocó en identificar las tareas y objetivos principales del proyecto:  
-- Verificar las conexiones de cada componente al Arduino.  
-- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
-- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
-- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
-- Garantizar una conexión estable entre Arduino y PC.  
-- Confirmar que la comunicación entre nodos sea serial.  
-- Permitir enviar comandos de dirección desde la terminal.
-
-## Codigos de trabajo.
-A continuación, se presentarán los nodos con sus respectivos nombres, el nombre utilizado para ejecutarlos y los valores que deben mostrarse en la terminal.
-Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
-- [Nodo de ultra_sonido](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Ultra-sonido)
-- [Nodo de control_velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Control-de-velocidades)
-- [Nodo de contorl_movimento]()
-- [Nodo de controlador]()
-- [Arduino]()
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+import threading
 
 
+def leer_terminal(node, pub):
+    while rclpy.ok():
+        # Convertir a mayúscula por si acaso
+        # siendo A=izquierda , S=recto y D= Derecha
+        comando = input("Ingresa A, S ,D: ").upper()
+        if comando not in ["A", "S", "D"]:
+            print("Valor inválido, intenta de nuevo.")
+            continue
+        pub.publish(String(data=comando))
+        print(f"Comando publicado: {comando}")
+
+
+def main():
+    rclpy.init()
+    nodo = Node("control_remoto")
+
+    # Publicador al tópico /modo como String
+    pub = nodo.create_publisher(String, '/modo', 10)
+
+    # Hilo para leer terminal sin bloquear ROS
+    hilo = threading.Thread(target=leer_terminal, args=(nodo, pub))
+    hilo.daemon = True
+    hilo.start()
+
+    print("Nodo de control remoto iniciado. Ingresa A, S o D por terminal.")
+
+    rclpy.spin(nodo)
+    nodo.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == "__main__":
+    main()
