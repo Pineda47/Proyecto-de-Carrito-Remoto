@@ -1,40 +1,158 @@
-# Proyecto-de-Carrito-Remoto
-Desarrollo de un carrito a control remoto con capacidad de frenar automáticamente al detectar un obstáculo, mediante la integración entre Arduino y Python utilizando comunicación serial en un esquema de publicadores y suscriptores.
+# arduino 
+Para el desarrollo y la planificación del sistema, es necesario cargar mediante USB el código base de Arduino. Este código debe tener la capacidad de recibir los valores enviados por el nodo final y procesarlos correctamente.
 
-## Changes included
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes: [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Desarrollo-previo).  
-Asimismo, se desarrolló un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings). Esto facilita la comprensión de la comunicación entre nodos y Arduino en el sistema.
+En este caso, los motores deben girar en direcciones opuestas cuando se ordena un giro, es decir, cada motor debe activar sus pines de dirección en sentido contrario para generar el efecto de rotación. Por el contrario, cuando el vehículo avanza o retrocede, ambos motores deben mantener la misma configuración de sentido.
 
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
+En esta etapa se identifican y se caracterizan las ubicaciones de cada pin:
 
-## Testing implemented
+- Motor 1: pines D5, D6 y D7.
 
-Las pruebas se realizaron en dos etapas:  
+- Motor 2: pines D8, D4 y D0.
 
-1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
-2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Pruebas).
+- Sensor ultrasónico: pines D1 y D2.
 
-## Related tickets
-
-Se enfocó en identificar las tareas y objetivos principales del proyecto:  
-- Verificar las conexiones de cada componente al Arduino.  
-- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
-- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
-- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
-- Garantizar una conexión estable entre Arduino y PC.  
-- Confirmar que la comunicación entre nodos sea serial.  
-- Permitir enviar comandos de dirección desde la terminal.
-
-## Codigos de trabajo.
-A continuación, se presentarán los nodos con sus respectivos nombres, el nombre utilizado para ejecutarlos y los valores que deben mostrarse en la terminal.
-Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
-- [Nodo de ultra_sonido](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Ultra-sonido)
-- [Nodo de control_velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Control-de-velocidades)
-- [Nodo de contorl_movimento](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/control-de-movimento)
-- [Nodo de controlador](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/controlador/README.md)
-- [Arduino]()
+Además, en esta parte se realiza el cálculo para determinar la distancia que será recibida por el nodo 1, correspondiente al procesamiento del sensor ultrasónico.
 
 
+
+
+#include <Arduino.h>
+
+// pines para el motor 1 que son los mismo que estan en fisico
+const int IN1 = D5;
+const int IN2 = D6;
+const int ENA = D7; // velocidad motor 1
+
+// pines para el motor 2 que solo se requiere que se apague o se prenda nada mas
+const int IN3 = D8;  // direccion motor 2
+const int IN4 = D10; // segundo pin de direccion motor 2 (nuevo)
+const int ENB = D0;  // velocidad motor 2 igual que el motor A (PWM)
+
+// pines para el snesor ultrasonido
+const int TRIG = D1; // para este caso se usa D3 en la parte fisica
+const int ECHO = D2; // para este caso se usa D4 en la parte fisica
+
+// funcion para medir la distancia del ultrasonido
+long medirDistancia()
+{
+  digitalWrite(TRIG, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10); // tiempo que tarda en registrar los valores de las distancias
+  digitalWrite(TRIG, LOW);
+
+  long duracion = pulseIn(ECHO, HIGH);
+  long distancia = duracion * 0.034 / 2; // conversion a cm
+
+  return distancia;
+}
+
+void setup()
+{
+  Serial.begin(115200);
+
+  // pines motor 1
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+
+  // pines motor 2
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, 0);
+
+  // pines ultrasonido
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+
+  // estado inicial motor 1
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 0);
+}
+
+void loop()
+{
+  long distancia = medirDistancia();
+  Serial.println(distancia); // esto es para verificar si el arduino esta funcionando
+
+  if (Serial.available())
+  {
+    char comando = Serial.read();
+
+    switch (comando)
+    {
+    case 'S': // Adelante
+      // motor 1 adelante
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      analogWrite(ENA, 150);
+
+      // motor 2 apagado
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, LOW);
+      analogWrite(ENB, 0);
+      break;
+
+    case 'B': // Retroceder (AMBOS motores prendidos porque estan en paralelo)
+      // motor 1 atras
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, HIGH);
+      analogWrite(ENA, 150);
+
+      // motor 2 atras
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
+      analogWrite(ENB, 150);
+      break;
+
+    case 'A': // Izquierda
+      // motor 1 adelante
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      analogWrite(ENA, 120);
+
+      // motor 2 adelante
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
+      analogWrite(ENB, 120);
+      break;
+
+    case 'D': // Derecha
+      // motor 1 atras
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, HIGH);
+      analogWrite(ENA, 120);
+
+      // motor 2 adelante
+      digitalWrite(IN3, HIGH);
+      digitalWrite(IN4, LOW);
+      analogWrite(ENB, 120);
+      break;
+
+    case 'P': // Parar
+    default:
+      // motor 1 apagado
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, LOW);
+      analogWrite(ENA, 0);
+
+      // motor 2 apagado
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, LOW);
+      analogWrite(ENB, 0);
+      break;
+    }
+  }
+
+  delay(100);
+}
+
+
+
+  delay(100);
+}
