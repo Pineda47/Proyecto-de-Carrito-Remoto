@@ -28,10 +28,9 @@ Se enfocó en identificar las tareas y objetivos principales del proyecto:
 - Confirmar que la comunicación entre nodos sea serial.  
 - Permitir enviar comandos de dirección desde la terminal.
 
-## Additional comments
+## codigos de trabajo.
+Acontuniacion se presntaran los nodos con sus nombres el nombre para ejecutarlos y los valores que debeb mostrar en la terminal 
 
-- Se recomienda revisar la calibración del sensor ultrasónico antes de realizar pruebas completas.  
-- Futuras mejoras incluyen control de velocidad proporcional al obstáculo detectado y registro de datos en tiempo real para análisis posterior.
 
 
 
