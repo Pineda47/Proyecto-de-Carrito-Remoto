@@ -34,7 +34,7 @@ Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
 - [Nodo de ultra_sonido](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Ultra-sonido)
 - [Nodo de control_velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Control-de-velocidades)
 - [Nodo de contorl_movimento](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/control-de-movimento)
-- [Nodo de controlador]()
+- [Nodo de controlador](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/controlador/README.md)
 - [Arduino]()
 
 
