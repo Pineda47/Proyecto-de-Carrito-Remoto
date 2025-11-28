@@ -1,4 +1,19 @@
+# Nodo control de movimento
+Este nodo es independiente de los demás, ya que se caracteriza por interactuar en tiempo real con el usuario. Su función es permitir que la persona ingrese una letra, la cual será almacenada y enviada posteriormente al último nodo.
 
+El publicador solicitará al usuario que digite una letra que indique la dirección deseada:
+
+- S: avanzar recto, sin alterar el curso.
+
+- A: girar a la derecha.
+
+- D: girar a la izquierda.
+
+El propósito de este nodo es permitir que el usuario pueda modificar la dirección mientras el vehículo, mediante el nodo 2 de control de velocidades, determina si debe detenerse, retroceder o continuar avanzando según los valores de distancia recibidos.
+
+
+
+```python
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
