@@ -4,7 +4,7 @@ En esta sección se enfoca en la identificación  en el esquema y de las caracte
 # Esquema
 Se dereallona el esquema de la construccion fisica del sistema vehicular desarrolllado en ludichat:
 
-
+https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Desarrollo-previo/Ros%202%20diagrama%20del%20sistema%20de%20mi%20robot%20-%20P%C3%A1gina%201.jpeg
 # Arduino
 
 El ESP8266 es un microcontrolador con capacidad de conexión Wi-Fi, y entre sus principales características se encuentran:
