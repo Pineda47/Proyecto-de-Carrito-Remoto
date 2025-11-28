@@ -2,40 +2,37 @@
 
 En esta sección se presentan las pruebas realizadas para validar el funcionamiento del proyecto. Se recomienda seguir ambas etapas si se desea replicar el proyecto, utilizando los códigos de prueba incluidos.
 
-## Etapa 1: Computacional
+Etapa 1: Verificación de Conexiones en Serie entre Nodos
 
-En esta etapa se analiza si las interacciones entre nodos están funcionando correctamente. Se inicia con el nodo de `ultra_sonido`.
+En esta etapa se enfocó en verificar las conexiones en serie entre los nodos, evaluando de manera secuencial que los valores transmitidos sean lógicos y coherentes entre cada par de nodos.
 
-El objetivo de esta prueba es generar y publicar valores aleatorios de tipo `Int32` en ROS2, hasta alcanzar un total de 10 números.
+El procedimiento se realizó de la siguiente manera:
 
-### Código de Prueba
+Prueba de comunicación entre nodos consecutivos:
+Se aplicó la verificación de dos en dos nodos para asegurar que los datos transmitidos fueran consistentes y correctos.
 
-import rclpy
-from std_msgs.msg import Int32
-import numpy as np
-import time
+Caso específico – Nodo generador de distancias y nodo receptor:
 
-def main():
-    # Inicializar ROS2
-    rclpy.init()
-    node = rclpy.create_node('random_int_node')
+El primer nodo genera valores de distancia aleatorios para simular la lectura de un sensor ultrasónico.
 
-    # Crear publicador de tipo Int32
-    pub = node.create_publisher(Int32, 'numeros_aleatorios', 10)
+En el setup se definió el nombre del publicador al que debe conectarse el siguiente nodo.
 
-    # Generar y publicar 10 números aleatorios
-    for i in range(10):
-        num = np.random.randint(0, 100, dtype=np.int32)
-        msg = Int32()
-        msg.data = int(num)  # Convertir a Python int
-        pub.publish(msg)
-        node.get_logger().info(f"Número publicado: {msg.data}")
-        time.sleep(1)  # Espera 1 segundo entre publicaciones
+Para fines de análisis, los valores recibidos se muestran en la terminal mediante println(valor de la distancia), permitiendo verificar que la conexión USB funciona de manera óptima antes de implementar la comunicación Wi-Fi.
 
-    node.get_logger().info("Se publicaron los 10 números. Nodo apagándose...")
-    node.destroy_node()
-    rclpy.shutdown()
+Integración con el nodo de control de velocidad:
 
-if __name__ == '__main__':
-    main()
+Una vez confirmada la comunicación entre el nodo generador de distancias y el nodo receptor, se conecta el suscriptor de control de velocidad.
 
+Este nodo recibe los valores de distancia y determina la acción del vehículo según la siguiente regla:
+
+-1: Retroceder
+
+1: Avanzar
+
+0: Detenerse
+
+Ejecución de la prueba:
+
+Para realizar la evaluación correctamente, es necesario ejecutar ambos programas en dos terminales diferentes: uno para el nodo que genera los valores de distancia y otro para el nodo de control de velocidad.
+
+Se espera que la terminal del suscriptor muestre las acciones correspondientes a los valores recibidos, verificando así la correcta transmisión de datos.
