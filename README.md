@@ -40,3 +40,29 @@ Permite que un microcontrolador (como Arduino o ESP8266) controle motores sin qu
   - Girar el motor hacia adelante.  
   - Girar el motor hacia atrás.  
   - Detener el motor.
+    
+![Conexiones-L298N](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Desarrollo-previo/Conexiones-L298N.png)
+
+# Sensor ultrasónico HC-SR04
+
+El HC-SR04 es un sensor de distancia que mide la distancia a un objeto usando ondas ultrasónicas. Es muy popular en proyectos de robótica, drones y sistemas de detección de obstáculos.
+
+## Características principales
+
+- Rango de medición: 2 cm a 400 cm aproximadamente.
+- Precisión: ±3 mm.
+- Voltaje de operación: 5 V.
+
+## Pines de conexión
+
+- VCC: alimentación positiva.
+- GND: tierra.
+- TRIG: pin de disparo; se envía un pulso para emitir el sonido.
+- ECHO: pin de recepción; se recibe el pulso reflejado para calcular la distancia.
+
+## Principio de funcionamiento
+
+1. Se envía un pulso ultrasónico desde el pin TRIG.
+2. El pulso rebota en un objeto y regresa al sensor.
+3. El pin ECHO mide el tiempo que tardó en regresar.
+4. Con el tiempo y la velocidad del sonido, se calcula la distancia al objeto.
