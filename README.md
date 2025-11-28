@@ -3,7 +3,7 @@ Desarrollo de un carrito a control remoto con capacidad de frenar automáticamen
 
 ## Changes included
 
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente.
+- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo LN298, basado en investigación de fuentes técnicas de cada componente.
 - Desarrollo de un mapa serial que identifique qué datos recibe y qué datos envía cada nodo.
 - Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (en el archivo main.cpp).
 - Desarrollo mínimo de cada nodo, iniciando con valores constantes para observar los resultados que brindaban los otros nodos.
