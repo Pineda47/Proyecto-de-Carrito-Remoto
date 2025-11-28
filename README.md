@@ -1,40 +1,92 @@
-# Proyecto-de-Carrito-Remoto
-Desarrollo de un carrito a control remoto con capacidad de frenar automáticamente al detectar un obstáculo, mediante la integración entre Arduino y Python utilizando comunicación serial en un esquema de publicadores y suscriptores.
+# Controlador
 
-## Changes included
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes: [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Desarrollo-previo).  
-Asimismo, se desarrolló un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings). Esto facilita la comprensión de la comunicación entre nodos y Arduino en el sistema.
 
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
 
-## Testing implemented
+´´´python
 
-Las pruebas se realizaron en dos etapas:  
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String, Float32
+import serial
+import time
 
-1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
-2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Pruebas).
+# Variables globales
+ultimo_modo = "S" # es para que no genere error y es que vaya recto
+ultima_velocidad = 1 # que vaya hacia adlente o que el motar gire de forma horaria
 
-## Related tickets
+# Abrir puerto serial a 115200
+arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+time.sleep(2)  # esperar a que el Arduino reinicie
 
-Se enfocó en identificar las tareas y objetivos principales del proyecto:  
-- Verificar las conexiones de cada componente al Arduino.  
-- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
-- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
-- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
-- Garantizar una conexión estable entre Arduino y PC.  
-- Confirmar que la comunicación entre nodos sea serial.  
-- Permitir enviar comandos de dirección desde la terminal.
 
-## Codigos de trabajo.
-A continuación, se presentarán los nodos con sus respectivos nombres, el nombre utilizado para ejecutarlos y los valores que deben mostrarse en la terminal.
-Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
-- [Nodo de ultra_sonido](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Ultra-sonido)
-- [Nodo de control_velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Control-de-velocidades)
-- [Nodo de contorl_movimento]()
-- [Nodo de controlador]()
-- [Arduino]()
+def enviar_a_arduino(letra, node):
+    try:
+        arduino.write(letra.encode())
+        node.get_logger().info(f"Enviado por Serial (115200): {letra}")
+    except Exception as e:
+        node.get_logger().error(f"Error enviando al Arduino: {e}")
+
+
+def publicar_a_arduino(node):
+    global ultimo_modo, ultima_velocidad
+
+    letra = "S"  # una condicion inicial para que no genere error
+
+    if abs(ultima_velocidad) == 0:
+        letra = "P"#Parar
+    elif ultima_velocidad == 1:
+        letra = "S"#delante
+    elif ultima_velocidad == -1:
+        letra = "B"#retroceder
+
+    # Sobrescribir si viene un modo remoto que sea del caso del nodo controlador_movimento codigo publicador_movimento
+    if ultimo_modo in ["A", "D"]:
+        letra = ultimo_modo
+
+    node.get_logger().info(f"Enviando letra al Arduino: {letra}")
+
+    # Publicar al tópico ROS
+    node.pub_arduino.publish(String(data=letra))
+
+    # Enviar realmente al Arduino por serial
+    enviar_a_arduino(letra, node)
+
+def modo_callback(msg, node):
+    global ultimo_modo
+    ultimo_modo = msg.data
+    publicar_a_arduino(node)
+
+
+#funcion que se conceta al nodo de control_velocidad
+def vel_callback(msg, node):
+    global ultima_velocidad
+    ultima_velocidad = msg.data
+    publicar_a_arduino(node)
+
+
+def main():
+    rclpy.init()
+    node = Node('coordinador')
+
+    # Publicador
+    node.pub_arduino = node.create_publisher(String, '/arduino_comando', 10)
+
+    # Suscriptores
+    node.create_subscription(
+        String, '/modo', lambda msg: modo_callback(msg, node), 10)
+    node.create_subscription(
+        Float32, '/vel_motor_a', lambda msg: vel_callback(msg, node), 10)
+
+    node.get_logger().info("Nodo coordinador iniciado (Serial 115200 listo)")
+    rclpy.spin(node)
+
+    arduino.close()
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == "__main__":
+    main()
+
 
 
