@@ -9,8 +9,8 @@ Se desarrolla el esquema de la construcción física del sistema vehicular desar
 Se puede visualizar que todas las flechas tienen diferentes sentidos, lo que representa cómo se realiza el tratamiento de la información en el sistema.  
 
 # Croquis de la interconexión de nodos con Arduino
-
- 
+https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Desarrollo-previo/Ros%202%20diagrama%20del%20sistema%20de%20mi%20robot%20-%20P%C3%A1gina%205.png
+ se presenta un clico que muestra un total  d enodos 
 # Arduino
 
 El ESP8266 es un microcontrolador con capacidad de conexión Wi-Fi, y entre sus principales características se encuentran:
