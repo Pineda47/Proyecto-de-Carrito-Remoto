@@ -3,20 +3,37 @@ Desarrollo de un carrito a control remoto con capacidad de frenar automáticamen
 
 ## Changes included
 
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo LN298, basado en investigación de fuentes técnicas de cada componente.
-- Desarrollo de un mapa serial que identifique qué datos recibe y qué datos envía cada nodo.
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (en el archivo main.cpp).
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes para observar los resultados que brindaban los otros nodos.
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito.
+- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes. [Click aquí](URL_de_la_rama).  
+- Desarrollo de un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings).  
+- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
+- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
+- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
 
 ## Testing implemented
 
-How the changes were implemented and what is the validation made to them
+Las pruebas se realizaron en dos etapas:  
+
+1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
+2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
+- Esta fase está documentada en la rama de experimentación. [Click aquí](URL_de_la_rama).
 
 ## Related tickets
 
-Others PRs and Issues considered
+Se enfocó en identificar las tareas y objetivos principales del proyecto:  
+- Verificar las conexiones de cada componente al Arduino.  
+- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
+- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
+- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
+- Garantizar una conexión estable entre Arduino y PC.  
+- Confirmar que la comunicación entre nodos sea serial.  
+- Permitir enviar comandos de dirección desde la terminal.
 
 ## Additional comments
 
-What other information would you like to share?
+- Se recomienda revisar la calibración del sensor ultrasónico antes de realizar pruebas completas.  
+- Futuras mejoras incluyen control de velocidad proporcional al obstáculo detectado y registro de datos en tiempo real para análisis posterior.
+
+
+
+## Additional comments
+
