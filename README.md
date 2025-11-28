@@ -1,6 +1,9 @@
 # Desarrollo previo
 
-En esta sección se enfoca en la identificación de las características de cada componente requerido para el desarrollo del sistema del vehículo.
+En esta sección se enfoca en la identificación  en el esquema y de las características de cada componente requerido para el desarrollo del sistema del vehículo.
+# Esquema
+Se dereallona el esquema de la construccion fisica del sistema vehicular desarrolllado en ludichat:
+
 
 # Arduino
 
