@@ -1,9 +1,11 @@
 # Controlador
+Para el desarrollo final de la serie de nodos destinados a la comunicación con el Arduino, este nodo se encarga de recibir la información proveniente de los dos nodos a los que está suscrito: el nodo de velocidad y el nodo de control de movimiento.
 
+Su función es agrupar y procesar estos datos para enviar al Arduino las instrucciones que determinan si el vehículo debe retroceder, detenerse o avanzar, de acuerdo con las velocidades generadas por el nodo de velocidad.
 
+El movimiento se mantiene hasta que el nodo de control de movimiento envía un comando de dirección, el cual puede ser A o D, indicando un cambio hacia la izquierda o hacia la derecha respectivamente.
 
-´´´python
-
+```python
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String, Float32
