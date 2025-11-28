@@ -1,40 +1,55 @@
-# Proyecto-de-Carrito-Remoto
-Desarrollo de un carrito a control remoto con capacidad de frenar automáticamente al detectar un obstáculo, mediante la integración entre Arduino y Python utilizando comunicación serial en un esquema de publicadores y suscriptores.
+# Control_ velocidades
+Para esta parte, el nodo está suscrito al nodo de distancias, lo que permite que, a partir de esos valores, se generen tres posibles acciones:
 
-## Changes included
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes: [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Desarrollo-previo).  
-Asimismo, se desarrolló un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings). Esto facilita la comprensión de la comunicación entre nodos y Arduino en el sistema.
+- 1: avanzar hacia adelante.
 
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
+- -1: retroceder.
 
-## Testing implemented
+- 0: detenerse.
 
-Las pruebas se realizaron en dos etapas:  
+Cada acción se determina con respecto a un intervalo definido por el umbral de distancia. En mi caso, se aplica un umbral de 20 cm, ya que esta distancia permite que la persona pueda reaccionar sin generar dificultades al vehículo.
 
-1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
-2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/tree/Pruebas).
+```python
+import rclpy
+from std_msgs.msg import Float32
+from rclpy.node import Node
 
-## Related tickets
+#codigo que esta conectado de forma serial 
 
-Se enfocó en identificar las tareas y objetivos principales del proyecto:  
-- Verificar las conexiones de cada componente al Arduino.  
-- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
-- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
-- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
-- Garantizar una conexión estable entre Arduino y PC.  
-- Confirmar que la comunicación entre nodos sea serial.  
-- Permitir enviar comandos de dirección desde la terminal.
+def main():
+    rclpy.init()
+    node = Node('motor_a_control')
 
-## Codigos de trabajo.
-A continuación, se presentarán los nodos con sus respectivos nombres, el nombre utilizado para ejecutarlos y los valores que deben mostrarse en la terminal.
-Como se mencionó en el desarrollo previo, se seguirá el mismo esquema.
-- [Nodo de ultra_sonido]()
-- [Nodo de control_velocidad]()
-- [Nodo de contorl_movimento]()
-- [Nodo de controlador]()
-- [Arduino]()
+    # Publicador de velocidad
+    pub_motor_a = node.create_publisher(Float32, 'vel_motor_a', 10)
+
+    # Umbral de distancia
+    UMBRAL = 20.0  # cm
+    margen = 10.0
+    # Callback cuando llega un mensaje de distancia
+
+    def distancia_callback(msg):
+        distancia = msg.data
+        if distancia > (UMBRAL + margen):
+            velocidad = 1.0 #hacia adelante
+        elif UMBRAL-margen < distancia < UMBRAL+margen:
+            velocidad = -1.0 # debe retrocedor
+        else:
+            velocidad = 0.0 #parar
+
+        # Publicar velocidad para determinar si el codigo esta ejecutando bien
+        pub_motor_a.publish(Float32(data=velocidad))
+        node.get_logger().info(
+            f"Distancia recibida: {distancia:.2f} cm -> Velocidad: {velocidad}")
+
+    # Suscriptor al topic de distancia
+    node.create_subscription(
+        Float32, 'ultra_distancia', distancia_callback, 10)
+
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
 
 
+if __name__ == "__main__":
+    main()
