@@ -1,39 +1,15 @@
-# Proyecto-de-Carrito-Remoto
-Desarrollo de un carrito a control remoto con capacidad de frenar automáticamente al detectar un obstáculo, mediante la integración entre Arduino y Python utilizando comunicación serial en un esquema de publicadores y suscriptores.
+# Desarrollo previo
 
-## Changes included
+En esta sección se enfoca en la identificación de las características de cada componente requerido para el desarrollo del sistema del vehículo.
 
-- Implementación de un esquema para identificar las diferentes conexiones del Arduino con el sensor ultrasónico y el módulo L298, basado en investigación de fuentes técnicas de cada componente. El esquema puede visualizarse y explicarse en una de las ramas presentes. [Click aquí](URL_de_la_rama).  
-- Desarrollo de un mapa serial que identifica qué datos recibe y qué datos envía cada nodo, permitiendo verificar el tipo de valores enviados (float32 y strings).  
-- Validación de la coherencia de los pines digitales con los físicos usando PlatformIO (archivo `main.cpp`) mediante pruebas para confirmar que los pines corresponden correctamente a cada función.  
-- Desarrollo mínimo de cada nodo, iniciando con valores constantes (como velocidades fijas) para observar el comportamiento de los otros nodos y la respuesta del sensor ultrasónico en el Arduino (`main.cpp`).  
-- Identificación de la manera de integrar los nodos Python (ROS2) con Arduino para la comunicación y control del carrito, desarrollada en dos etapas que serán presentadas en la rama de análisis final.
+# Arduino
 
-## Testing implemented
+El ESP8266 es un microcontrolador con capacidad de conexión Wi-Fi, y entre sus principales características se encuentran:
 
-Las pruebas se realizaron en dos etapas:  
+-Wi-Fi integrado: permite conectarse a redes inalámbricas para enviar y recibir datos.
 
-1. **Computacional:** Se aplicaron valores fijos para observar cómo reaccionaban los demás nodos.  
-2. **Práctica / Física:** Se ensamblaron los componentes uno a uno para verificar la correcta conexión y funcionamiento de cada pieza.  
-- Esta fase está documentada en la rama de experimentación. [Click aquí](URL_de_la_rama).
+-GPIOs (pines de entrada/salida): se pueden utilizar para controlar motores y sensores.
 
-## Related tickets
+-Compatibilidad con PlatformIO: se puede programar de manera similar a un Arduino tradicional.
 
-Se enfocó en identificar las tareas y objetivos principales del proyecto:  
-- Verificar las conexiones de cada componente al Arduino.  
-- Comprobar que el sensor ultrasónico brinde distancias coherentes.  
-- Confirmar que los motores conectados al L298 funcionen correctamente sin la intervención del Arduino.  
-- Asegurar que los motores puedan variar su velocidad y dirección según los comandos recibidos.  
-- Garantizar una conexión estable entre Arduino y PC.  
-- Confirmar que la comunicación entre nodos sea serial.  
-- Permitir enviar comandos de dirección desde la terminal.
-
-## Additional comments
-
-- Se recomienda revisar la calibración del sensor ultrasónico antes de realizar pruebas completas.  
-- Futuras mejoras incluyen control de velocidad proporcional al obstáculo detectado y registro de datos en tiempo real para análisis posterior.
-
-
-
-## Additional comments
-
+-Bajo consumo de energía: ideal para proyectos que funcionan con baterías.
