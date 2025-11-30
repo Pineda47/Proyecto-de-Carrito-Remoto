@@ -56,3 +56,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+En esta parte se muestra como debe salir en la terminal:
+```bash
+Comando publicado: W
+Ingresa A, S ,D: A
+Comando publicado: A
+```
