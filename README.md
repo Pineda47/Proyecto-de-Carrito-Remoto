@@ -14,27 +14,36 @@ Por ello, se define un valor de tipo float, llamado 'umbral', que representa la 
 
 A continuacion se presentara el codigo del publicador del control_velcidad con la finalidad de que se pueda replicar y mejorar
 ```python
+import rclpy
+from std_msgs.msg import Float32
+from rclpy.node import Node
+
+# codigo que esta conectado de forma serial
+
+
 def main():
     rclpy.init()
-    node = Node('motor_control')
+    node = Node('motor_a_control')
 
     # Publicador de velocidad
-    pub_motor= node.create_publisher(Float32, 'vel_motor', 10)
+    pub_motor_a = node.create_publisher(Float32, 'vel_motor_a', 10)
 
     # Umbral de distancia
     UMBRAL = 10.0  # cm
+    margen = 5.0
     # Callback cuando llega un mensaje de distancia
 
     def distancia_callback(msg):
         distancia = msg.data
         if distancia >= (UMBRAL):
             velocidad = 1.0  # hacia adelante
-
+        # elif (UMBRAL-margen) < distancia < (UMBRAL+margen):
+            # velocidad = -1.0  # debe retrocedor
         else:
             velocidad = 0.0  # parar
 
         # Publicar velocidad para determinar si el codigo esta ejecutando bien
-        pub_motor.publish(Float32(data=velocidad))
+        pub_motor_a.publish(Float32(data=velocidad))
         node.get_logger().info(
             f"Distancia recibida: {distancia:.2f} cm -> Velocidad: {velocidad}")
 
@@ -50,6 +59,10 @@ def main():
 if __name__ == "__main__":
     main()
 
+```
+y en la terminal debe salir:
+```bash
+Distancia publicada: 17.00 cm
 ```
 
 ## Mejora a futuro:
