@@ -19,11 +19,11 @@ luego de entender esa parte se debe realizar estos dos pasas que son mostrados e
 ## Aplicaciones futuras 
 Se puede comprender que, si se logra un desarrollo efectivo de la relación entre el sensor y el movimiento del vehículo, esta tecnología puede aplicarse al diseño mecánico y tecnológico de nuevos vehículos. Su implementación permitiría incrementar la seguridad vial, ya que brindaría apoyo a los conductores en situaciones donde puedan estar distraídos o no perciban correctamente los obstáculos en la vía.
 ## codigos de desarrollo:
-1. [ultra sonido]()
-2. [Control de velocidades]()
-3. [Control de movimento]()
-4. [Controlador]()
-5. [Arduino]()
+1. [ultra sonido](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Ultra-sonido/README.md)
+2. [Control de velocidades](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Control-de-velocidades/README.md)
+3. [Control de movimento](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/control-de-movimento/README.md)
+4. [Controlador](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/control-de-movimento/README.md)
+5. [Arduino](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Arduino/README.md)
 ## Autor 
 Juan Camilo Pienda
 
