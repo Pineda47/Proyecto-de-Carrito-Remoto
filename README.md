@@ -10,4 +10,5 @@ Uno de los métodos clásicos para confirmar que el sensor ultrasónico está en
 
 A continuación, se presentan imágenes que muestran las pruebas realizadas.
 
+![](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/primera%20prueba.jpeg)
 
