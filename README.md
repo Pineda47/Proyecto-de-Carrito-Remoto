@@ -34,3 +34,5 @@ A partir de la distancia publicada por el nodo de ultrasonido, el nodo de veloci
 En el caso del ejemplo presentado anteriormente, la distancia medida corresponde a un valor seguro, por lo que la salida esperada es:
 
 velocidad = 1
+## 3. Coneccion del trecer nodo
+En el desarrollo 
