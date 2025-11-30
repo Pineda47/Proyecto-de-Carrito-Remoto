@@ -16,10 +16,10 @@ A continuacion se presentara el codigo del publicador del control_velcidad con l
 
 def main():
     rclpy.init()
-    node = Node('motor_a_control')
+    node = Node('motor_control')
 
     # Publicador de velocidad
-    pub_motor_a = node.create_publisher(Float32, 'vel_motor_a', 10)
+    pub_motor= node.create_publisher(Float32, 'vel_motor', 10)
 
     # Umbral de distancia
     UMBRAL = 10.0  # cm
@@ -34,7 +34,7 @@ def main():
             velocidad = 0.0  # parar
 
         # Publicar velocidad para determinar si el codigo esta ejecutando bien
-        pub_motor_a.publish(Float32(data=velocidad))
+        pub_motor.publish(Float32(data=velocidad))
         node.get_logger().info(
             f"Distancia recibida: {distancia:.2f} cm -> Velocidad: {velocidad}")
 
@@ -49,8 +49,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+## Aclaracion :
 
-## Mejora a futuro
+## Mejora a futuro:
 
 Se puede implementar una condición adicional que permita que el vehículo retroceda dentro de un intervalo específico. Para ello, se puede introducir un nuevo valor llamado margen, el cual define un rango de distancia entre dos valores.
 
