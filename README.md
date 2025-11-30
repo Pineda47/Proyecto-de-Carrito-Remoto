@@ -1,3 +1,34 @@
+# Control remoto vehicular
+## Descripcion
+El proyecto consiste en el desarrollo de un sistema de publicadores y suscriptores que se comunican de forma serial, con el objetivo de implementar un controlador manual y, al mismo tiempo, un control condicionado por un sensor ultrasónico.
+Este sistema permite enviar información hacia el Arduino para controlar los motores, y recibir los datos medidos por el sensor ultrasónico. De esta manera, el vehículo puede operar tanto bajo comando manual como mediante decisiones automáticas basadas en la distancia detectada.
+
+## Objetivos
+1. Generar una configracion serial.
+2. Presentar una coneccion entre el computaodr y el adruino.
+3. Entender el funcionamiento de cada componenete fisico del vehiculo.
+4. gnerar dependiandoa de movimento del vehciluclo al sensor ultra sonido
+   ## Desarrollo
+El desarrollo se enfoca en la aplicación y comprensión del lenguaje Python para la creación y funcionamiento de los nodos. Para ello, es necesario definir un topic implementado en Python, el cual se estructura de la siguiente manera:
+```bash
+ros2 pkg create my_cpp_pkg --build-type ament_cmake --dependencies rclcpp std_msgs
+```
+
+## Mejora a futuro:
+
+Se puede implementar una condición adicional que permita que el vehículo retroceda dentro de un intervalo específico. Para ello, se puede introducir un nuevo valor llamado margen, el cual define un rango de distancia entre dos valores.
+
+Por ejemplo, si se define un margen de 5 cm y el umbral es de 15 cm, el intervalo de retroceso sería:
+
+* (15 cm − 5 cm)
+
+Además, la condición inicial debería modificarse para que ya no solo dependa del valor del umbral, sino de una comparación con:
+
+* umbral + margen
+
+De esta forma, el sistema puede tomar decisiones más precisas, permitiendo retroceder cuando la distancia sea demasiado cercana, avanzar cuando sea segura y detenerse en el punto intermedio.
+
+.
 # Nodo ultra sonido 
 Este nodo se conecta mediante USB, lo que permite verificar si la comunicación en serie entre el Arduino y el PC funciona correctamente. Para ello, se crea una función que determina si la conexión es efectiva. Sin embargo, gran parte de las veces, muchos cables USB no cuentan con los permisos necesarios. Por esta razón, antes de ejecutar el programa, se debe realizar en la PC lo siguiente:
  
