@@ -45,4 +45,4 @@ En esta parte se aplica todo los nods en cutro terminales diferentes ejecutando 
 
 ## 5. Desarrollo final:
 esta es la ultima etapa que consiste en la coneccion del vechiculo por medio de una usb y deterinar si el funcionamento del vehiculo.
-![]
+[](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/RESULTADO%20DE%20PRUEBA%20FINAL.mp4)
