@@ -78,14 +78,3 @@ en la terminal debe salir:
 [INFO] [1764480530.969993993] [ultra_distancia_node]: Distancia publicada: 17.00 cm
 
 ```
-
-
-
-
-
-
-
-
-
-
-[control_velocidad]()
