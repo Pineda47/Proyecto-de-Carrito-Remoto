@@ -11,7 +11,7 @@ ros2 pkg create my_cpp_pkg --build-type ament_cmake --dependencies rclcpp std_ms
 ```
 luego de entender esa parte se debe realizar estos dos pasas que son mostrados en los siguentes link:
 * [Desarrollo-previo](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Desarrollo-previo/README.md)
-* [Pruebas]()
+* [Pruebas](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/README.md)
 
 
 
