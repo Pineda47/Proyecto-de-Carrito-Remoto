@@ -13,7 +13,7 @@ Un aspecto importante para el desarrollo de esta sección es determinar una dist
 Por ello, se define un valor de tipo float, llamado 'umbral', que representa la distancia mínima necesaria para permitir el avance del vehículo. A partir de este parámetro, se aplica una condición dependiente del valor de distancia recibido por el nodo [ultra_sonido]().
 
 A continuacion se presentara el codigo del publicador del control_velcidad con la finalidad de que se pueda replicar y mejorar
-
+```python
 def main():
     rclpy.init()
     node = Node('motor_control')
@@ -49,7 +49,8 @@ def main():
 
 if __name__ == "__main__":
     main()
-## Aclaracion :
+
+```
 
 ## Mejora a futuro:
 
