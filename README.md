@@ -7,14 +7,14 @@ En esta etapa se identifican y se caracterizan las ubicaciones de cada pin:
 
 - Motor 1: pines D5, D6 y D7.
 
-- Motor 2: pines D8, D4 y D0.
+- Motor 2: pines D3, D4 y D0.
 
 - Sensor ultrasónico: pines D1 y D2.
 
 Además, en esta parte se realiza el cálculo para determinar la distancia que será recibida por el nodo 1, correspondiente al procesamiento del sensor ultrasónico.
 
 
-´´´python
+```python
 #include <Arduino.h>
 
 // pines para el motor 1 que son los mismo que estan en fisico
@@ -23,8 +23,8 @@ const int IN2 = D6;
 const int ENA = D7; // velocidad motor 1
 
 // pines para el motor 2 que solo se requiere que se apague o se prenda nada mas
-const int IN3 = D8;  // direccion motor 2
-const int IN4 = D10; // segundo pin de direccion motor 2 (nuevo)
+const int IN3 = D3;  // direccion motor 2
+const int IN4 = D4; // segundo pin de direccion motor 2 (nuevo)
 const int ENB = D0;  // velocidad motor 2 igual que el motor A (PWM)
 
 // pines para el snesor ultrasonido
@@ -151,6 +151,7 @@ void loop()
   delay(100);
 }
 
+```
 
 
 
