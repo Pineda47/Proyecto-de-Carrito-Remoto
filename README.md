@@ -15,6 +15,6 @@ ros2 pkg create my_cpp_pkg --build-type ament_cmake --dependencies rclcpp std_ms
 ```
 Después de esto, se llevan a cabo las dos etapas principales del desarrollo:
 
-1.[Desarrollo previo](): Consiste en recopilar información y elaborar los esquemas necesarios para la adecuada estructuración del proyecto.
+1.[Desarrollo previo](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/README.md): Consiste en recopilar información y elaborar los esquemas necesarios para la adecuada estructuración del proyecto.
 
 2.[Pruebas](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/README.md): En esta etapa se ejecutan, de manera secuencial, los procesos de identificación y verificación para asegurar que cada componente, tanto físico como de código, funcione correctamente.
