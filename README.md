@@ -1,68 +1,17 @@
-# Control_de_velocidades
+# Control remoto vehicular
+## Descripcion
+El proyecto consiste en el desarrollo de un sistema de publicadores y suscriptores que se comunican de forma serial, con el objetivo de implementar un controlador manual y, al mismo tiempo, un control condicionado por un sensor ultrasónico.
+Este sistema permite enviar información hacia el Arduino para controlar los motores, y recibir los datos medidos por el sensor ultrasónico. De esta manera, el vehículo puede operar tanto bajo comando manual como mediante decisiones automáticas basadas en la distancia detectada.
 
-En esta parte del proyecto, el nodo está suscrito al nodo encargado de medir distancias. Con base en los valores recibidos, se generan dos posibles salidas que serán publicadas:
-
-1: avanzar hacia adelante
-
-0: detenerse
-
-Para verificar que el publicador del nodo control_velocidad funciona correctamente, se realiza la etapa dos de la rama del método de prueba (si desean ver más detalles, pueden consultar el enlace: [clic aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/README.md)
-().
-
-Un aspecto importante para el desarrollo de esta sección es determinar una distancia adecuada que permita evitar colisiones y proteger las piezas del vehículo.
-Por ello, se define un valor de tipo float, llamado 'umbral', que representa la distancia mínima necesaria para permitir el avance del vehículo. A partir de este parámetro, se aplica una condición dependiente del valor de distancia recibido por el nodo [ultra_sonido]().
-
-A continuacion se presentara el codigo del publicador del control_velcidad con la finalidad de que se pueda replicar y mejorar
-```python
-import rclpy
-from std_msgs.msg import Float32
-from rclpy.node import Node
-
-# codigo que esta conectado de forma serial
-
-
-def main():
-    rclpy.init()
-    node = Node('motor_a_control')
-
-    # Publicador de velocidad
-    pub_motor_a = node.create_publisher(Float32, 'vel_motor_a', 10)
-
-    # Umbral de distancia
-    UMBRAL = 10.0  # cm
-    margen = 5.0
-    # Callback cuando llega un mensaje de distancia
-
-    def distancia_callback(msg):
-        distancia = msg.data
-        if distancia >= (UMBRAL):
-            velocidad = 1.0  # hacia adelante
-        # elif (UMBRAL-margen) < distancia < (UMBRAL+margen):
-            # velocidad = -1.0  # debe retrocedor
-        else:
-            velocidad = 0.0  # parar
-
-        # Publicar velocidad para determinar si el codigo esta ejecutando bien
-        pub_motor_a.publish(Float32(data=velocidad))
-        node.get_logger().info(
-            f"Distancia recibida: {distancia:.2f} cm -> Velocidad: {velocidad}")
-
-    # Suscriptor al topic de distancia
-    node.create_subscription(
-        Float32, 'ultra_distancia', distancia_callback, 10)
-
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
-
-
-if __name__ == "__main__":
-    main()
-
-```
-y en la terminal debe salir:
+## Objetivos
+1. Generar una configracion serial.
+2. Presentar una coneccion entre el computaodr y el adruino.
+3. Entender el funcionamiento de cada componenete fisico del vehiculo.
+4. gnerar dependiandoa de movimento del vehciluclo al sensor ultra sonido
+   ## Desarrollo
+El desarrollo se enfoca en la aplicación y comprensión del lenguaje Python para la creación y funcionamiento de los nodos. Para ello, es necesario definir un topic implementado en Python, el cual se estructura de la siguiente manera:
 ```bash
-[INFO] [1764480530.969476338] [motor_a_control]: Distancia recibida: 17.00 cm -> Velocidad: 1.0
+ros2 pkg create my_cpp_pkg --build-type ament_cmake --dependencies rclcpp std_msgs
 ```
 
 ## Mejora a futuro:
@@ -330,5 +279,3 @@ retornar al main:
 
 
 
-  delay(100);
-}
