@@ -1,4 +1,4 @@
-Control_de_velocidades
+# Control_de_velocidades
 
 En esta parte del proyecto, el nodo está suscrito al nodo encargado de medir distancias. Con base en los valores recibidos, se generan dos posibles salidas que serán publicadas:
 
