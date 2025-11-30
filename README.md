@@ -3,14 +3,17 @@ Este nodo es independiente de los demás, ya que se caracteriza por interactuar 
 
 El publicador solicitará al usuario que digite una letra que indique la dirección deseada:
 
-- S: avanzar recto, sin alterar el curso.
+- W: avanzar recto, sin alterar el curso.
 
 - A: girar a la derecha.
 
 - D: girar a la izquierda.
 
-El propósito de este nodo es permitir que el usuario pueda modificar la dirección mientras el vehículo, mediante el nodo 2 de control de velocidades, determina si debe detenerse, retroceder o continuar avanzando según los valores de distancia recibidos.
-
+- S: Parar
+  Son  el mismo sistema para algunos videjuegos.
+El propósito de este nodo es permitir que el usuario pueda modificar la dirección mientras el vehículo, mediante el nodo 2 de control de velocidades, determina si debe detenerse, retroceder o continuar avanzando según los valores de distancia recibidos.El desarrollo de la prueba para el codigo se presenta en al etapa 3 que se explica en el rama de pruebas [click aqui].
+## Concepto de mejora futura:
+Posible desarrollo de otro nodo que tenga la capacidad de generar la potenica que requiere girar el motar como lo de los carros (1,2,3,4,R).
 
 
 ```python
@@ -25,7 +28,7 @@ def leer_terminal(node, pub):
         # Convertir a mayúscula por si acaso
         # siendo A=izquierda , S=recto y D= Derecha
         comando = input("Ingresa A, S ,D: ").upper()
-        if comando not in ["A", "S", "D"]:
+        if comando not in ["A", "S", "D", "W"]:
             print("Valor inválido, intenta de nuevo.")
             continue
         pub.publish(String(data=comando))
@@ -44,7 +47,7 @@ def main():
     hilo.daemon = True
     hilo.start()
 
-    print("Nodo de control remoto iniciado. Ingresa A, S o D por terminal.")
+    print("Nodo de control remoto iniciado. Ingresa A, S o D, W por terminal.")
 
     rclpy.spin(nodo)
     nodo.destroy_node()
