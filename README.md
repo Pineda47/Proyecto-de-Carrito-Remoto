@@ -1,171 +1,37 @@
-
-# Arduino 
-Para el desarrollo y la planificación del sistema, es necesario cargar mediante USB el código base de Arduino. Este código debe tener la capacidad de recibir los valores enviados por el nodo final y procesarlos correctamente.
-
-En este caso, los motores deben girar en direcciones opuestas cuando se ordena un giro, es decir, cada motor debe activar sus pines de dirección en sentido contrario para generar el efecto de rotación. Por el contrario, cuando el vehículo avanza o retrocede, ambos motores deben mantener la misma configuración de sentido.
-
-En esta etapa se identifican y se caracterizan las ubicaciones de cada pin:
-
-- Motor 1: pines D5, D6 y D7.
-
-- Motor 2: pines D3, D4 y D0.
-
-- Sensor ultrasónico: pines D1 y D2.
-
-Además, en esta parte se realiza el cálculo para determinar la distancia que será recibida por el nodo 1, correspondiente al procesamiento del sensor ultrasónico.
+# Control remoto vehicular
+## Descripcion
+El proyecto consiste en el desarrollo de un sistema de publicadores y suscriptores que se comunican de forma serial, con el objetivo de implementar un controlador manual y, al mismo tiempo, un control condicionado por un sensor ultrasónico.
+Este sistema permite enviar información hacia el Arduino para controlar los motores, y recibir los datos medidos por el sensor ultrasónico. De esta manera, el vehículo puede operar tanto bajo comando manual como mediante decisiones automáticas basadas en la distancia detectada.
 
 
-```python
-#include <Arduino.h>
+Imágenes
 
-// pines para el motor 1 que son los mismo que estan en fisico
-const int IN1 = D5;
-const int IN2 = D6;
-const int ENA = D7; // velocidad motor 1
+Dependiendo de lo que esté haciendo, puede ser una buena idea incluir capturas de pantalla o incluso un video (con frecuencia verá GIF en lugar de videos reales). Herramientas como ¿Tygif Puede ayudar, pero echa un vistazo Asciinema Para un método más sofisticado.
+Instalación
 
-// pines para el motor 2 que solo se requiere que se apague o se prenda nada mas
-const int IN3 = D3;  // direccion motor 2
-const int IN4 = D4; // segundo pin de direccion motor 2 (nuevo)
-const int ENB = D0;  // velocidad motor 2 igual que el motor A (PWM)
+Dentro de un ecosistema particular, puede haber una forma común de instalar cosas, como el uso Hilo, NuGet, o Homebrew. Sin embargo, considere la posibilidad de que quien esté leyendo su README es un novato y le gustaría más orientación. Añadir pasos específicos ayuda a eliminar la ambigüedad y hace que las personas utilicen su proyecto lo más rápido posible. Si solo se ejecuta en un contexto específico como una versión de lenguaje de programación o sistema operativo en particular o tiene dependencias que deben instalarse manualmente, también agregue una Requisitos Subsección.
+Uso
 
-// pines para el snesor ultrasonido
-const int TRIG = D1; // para este caso se usa D3 en la parte fisica
-const int ECHO = D2; // para este caso se usa D4 en la parte fisica
+Utilice ejemplos generosamente y muestre la salida esperada si puede. Es útil tener en línea el ejemplo más pequeño de uso que puede demostrar, al tiempo que proporciona enlaces a ejemplos más sofisticados si son demasiado largos para incluir razonablemente en el README.
+Apoyo
 
-// funcion para medir la distancia del ultrasonido
-long medirDistancia()
-{
-  digitalWrite(TRIG, LOW);
-  delayMicroseconds(2);
+Dígale a la gente a dónde puede ir en busca de ayuda. Puede ser cualquier combinación de un rastreador de problemas, una sala de chat, una dirección de correo electrónico, etc.
+Hoja de ruta
 
-  digitalWrite(TRIG, HIGH);
-  delayMicroseconds(10); // tiempo que tarda en registrar los valores de las distancias
-  digitalWrite(TRIG, LOW);
+Si tiene ideas para lanzamientos en el futuro, es una buena idea enumerarlos en el README.
+Contribución
 
-  long duracion = pulseIn(ECHO, HIGH);
-  long distancia = duracion * 0.034 / 2; // conversion a cm
+Indique si está abierto a contribuciones y cuáles son sus requisitos para aceptarlas.
 
-  return distancia;
-}
+Para las personas que desean realizar cambios en su proyecto, es útil tener alguna documentación sobre cómo comenzar. Tal vez haya un script que deberían ejecutar o algunas variables de entorno que necesitan establecer. Haga estos pasos explícitos. Estas instrucciones también podrían ser útiles para su futuro yo.
 
-void setup()
-{
-  Serial.begin(115200);
+También puede documentar comandos para Lint el código o Ejecutar pruebas. Estos pasos ayudan a garantizar una alta calidad del código y reducen la probabilidad de que los cambios inadvertidamente rompan algo. Tener instrucciones para ejecutar pruebas es especialmente útil si requiere una configuración externa, como comenzar un Selenio Servidor para pruebas en un navegador.
+Autores y reconocimiento
 
-  // pines motor 1
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(ENA, OUTPUT);
+Muestre su agradecimiento a aquellos que han contribuido al proyecto.
+Licencia
 
-  // pines motor 2
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
-  pinMode(ENB, OUTPUT);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, 0);
+Para proyectos de código abierto, diga cómo es Licencia.
+Estado del proyecto
 
-  // pines ultrasonido
-  pinMode(TRIG, OUTPUT);
-  pinMode(ECHO, INPUT);
-
-  // estado inicial motor 1
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 0);
-}
-
-void loop()
-{
-  long distancia = medirDistancia();
-  Serial.println(distancia); // esto es para verificar si el arduino esta funcionando
-
-  if (Serial.available())
-  {
-    char comando = Serial.read();
-
-    switch (comando)
-    {
-    case 'S': // Adelante
-      // motor 1 adelante
-      digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);
-      analogWrite(ENA, 150);
-
-      // motor 2 apagado
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, LOW);
-      analogWrite(ENB, 0);
-      break;
-
-    case 'B': // Retroceder (AMBOS motores prendidos porque estan en paralelo)
-      // motor 1 atras
-      digitalWrite(IN1, LOW);
-      digitalWrite(IN2, HIGH);
-      analogWrite(ENA, 150);
-
-      // motor 2 atras
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, HIGH);
-      analogWrite(ENB, 150);
-      break;
-
-    case 'A': // Izquierda
-      // motor 1 adelante
-      digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);
-      analogWrite(ENA, 120);
-
-      // motor 2 adelante
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, HIGH);
-      analogWrite(ENB, 120);
-      break;
-
-    case 'D': // Derecha
-      // motor 1 atras
-      digitalWrite(IN1, LOW);
-      digitalWrite(IN2, HIGH);
-      analogWrite(ENA, 120);
-
-      // motor 2 adelante
-      digitalWrite(IN3, HIGH);
-      digitalWrite(IN4, LOW);
-      analogWrite(ENB, 120);
-      break;
-
-    case 'P': // Parar
-    default:
-      // motor 1 apagado
-      digitalWrite(IN1, LOW);
-      digitalWrite(IN2, LOW);
-      analogWrite(ENA, 0);
-
-      // motor 2 apagado
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, LOW);
-      analogWrite(ENB, 0);
-      break;
-    }
-  }
-
-  delay(100);
-}
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  delay(100);
-}
+Si se ha quedado sin energía o tiempo para su proyecto, ponga una nota en la parte superior del README diciendo que el desarrollo se ha ralentizado o detenido por completo. Alguien puede optar por bifurcar su proyecto o ser voluntario para intervenir como mantenedor o propietario, permitiendo que su proyecto siga adelante. También puede hacer una solicitud explícita para los mantenedores.
