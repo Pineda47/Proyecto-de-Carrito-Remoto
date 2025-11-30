@@ -1,9 +1,11 @@
 # Nodo ultra sonido 
 Este nodo se conecta mediante USB, lo que permite verificar si la comunicación en serie entre el Arduino y el PC funciona correctamente. Para ello, se crea una función que determina si la conexión es efectiva. Sin embargo, gran parte de las veces, muchos cables USB no cuentan con los permisos necesarios. Por esta razón, antes de ejecutar el programa, se debe realizar en la PC lo siguiente:
  
- 
+ ```bash
  sudo chmod 777 /dev/ttyUSB0
+source install/setup.bash
 
+ ```
 
 ```python
 import rclpy
@@ -70,7 +72,12 @@ def main():
 
 if __name__ == "__main__":
     main()
-´´´python
+```
+en la terminal debe salir:
+```bash
+[INFO] [1764480530.969993993] [ultra_distancia_node]: Distancia publicada: 17.00 cm
+
+```
 
 
 
