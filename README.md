@@ -62,7 +62,7 @@ if __name__ == "__main__":
 ```
 y en la terminal debe salir:
 ```bash
-Distancia publicada: 17.00 cm
+[INFO] [1764480530.969476338] [motor_a_control]: Distancia recibida: 17.00 cm -> Velocidad: 1.0
 ```
 
 ## Mejora a futuro:
