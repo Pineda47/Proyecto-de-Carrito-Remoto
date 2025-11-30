@@ -89,6 +89,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+Mostrado en la terminal de la siguente manera:
+``` bash
+[INFO] [1764480530.972471635] [coordinador]: Enviado por Serial (115200): W
 
+```
 
 
