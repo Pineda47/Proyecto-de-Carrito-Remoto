@@ -35,4 +35,14 @@ En el caso del ejemplo presentado anteriormente, la distancia medida corresponde
 
 velocidad = 1
 ## 3. Coneccion del trecer nodo
-En el desarrollo 
+En el desarrollo de esta etapa se separa ligeramente el flujo de las pruebas anteriores. Para ello, se ejecuta en una terminal adicional el nodo de control_de_movimiento.
+El objetivo es verificar que este nodo esté publicando correctamente los comandos y que responda adecuadamente a las instrucciones ingresadas desde la terminal.
+
+En esta prueba, el nodo presenta un enunciado solicitando al usuario seleccionar una de las letras habilitadas. Cada letra corresponde a una acción específica del sistema, lo que permite comprobar que los mensajes se publiquen correctamente.
+
+## 4. Desarrollo de los nodos de forma serial 
+En esta parte se aplica todo los nods en cutro terminales diferentes ejecutando primero el de ultra sonido luego el de velocidades , despues el de control de movimentos  y al funal el de controldor para determinar que si el ultimo publique en la pantalla las direcciones que va a desarrollar que esta condicionada por el comando y por la distancia  brindada anteiormente.
+
+## 5. Desarrollo final:
+esta es la ultima etapa que consiste en la coneccion del vechiculo por medio de una usb y deterinar si el funcionamento del vehiculo.
+
