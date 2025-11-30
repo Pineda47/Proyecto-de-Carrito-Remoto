@@ -10,7 +10,7 @@ El desarrollo se enfoca en la aplicación y comprensión del lenguaje Python par
 ros2 pkg create my_cpp_pkg --build-type ament_cmake --dependencies rclcpp std_msgs
 ```
 luego de entender esa parte se debe realizar estos dos pasas que son mostrados en los siguentes link:
-* [Desarrollo-previo]()
+* [Desarrollo-previo](Desarrollo-previo)
 * [Pruebas]()
 
 
