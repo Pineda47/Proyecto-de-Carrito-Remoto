@@ -6,7 +6,7 @@ En esta parte del proyecto, el nodo está suscrito al nodo encargado de medir di
 
 0: detenerse
 
-Para verificar que el publicador del nodo control_velocidad funciona correctamente, se realiza la etapa dos de la rama del método de prueba (si desean ver más detalles, pueden consultar el enlace: [clic aquí]
+Para verificar que el publicador del nodo control_velocidad funciona correctamente, se realiza la etapa dos de la rama del método de prueba (si desean ver más detalles, pueden consultar el enlace: [clic aquí](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Pruebas/README.md)
 ().
 
 Un aspecto importante para el desarrollo de esta sección es determinar una distancia adecuada que permita evitar colisiones y proteger las piezas del vehículo.
