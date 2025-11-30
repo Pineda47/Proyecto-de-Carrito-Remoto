@@ -21,7 +21,7 @@ Para esta etapa se utilizan los resultados obtenidos en la primera fase, ejecuta
 
  * En la primera se ejecuta el nodo de medición de distancia.
 
- * En la segunda se ejecuta el nodo encargado del control de velocidad.
+ * En la segunda se ejecuta el nodo encargado del [control de velocidad](https://github.com/Pineda47/Proyecto-de-Carrito-Remoto/blob/Control-de-velocidades/README.md).
 
 A partir de la distancia publicada por el nodo de ultrasonido, el nodo de velocidades debe generar una de las tres posibles salidas:
 
